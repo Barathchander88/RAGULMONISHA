@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Split and Join Animation with Love Quotes</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb);
+      background-size: 300% 300%;
+      animation: backgroundAnimation 10s infinite;
+      font-family: 'Arial', sans-serif;
+    }
+
+    @keyframes backgroundAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      position: relative;
+      width: 500px;
+      height: 600px;
+      overflow: hidden;
+    }
+
+    .half {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: transform 2s ease-in-out;
+    }
+
+    .left {
+      left: 0;
+      background-image: url('RAJ_8286.jpg'); /* Replace with your image path */
+      clip-path: inset(0 50% 0 0);
+    }
+
+    .right {
+      right: 0;
+      background-image: url('RAJ_8286.jpg'); /* Replace with your image path */
+      clip-path: inset(0 0 0 50%);
+    }
+
+    .split .left {
+      transform: translateX(-100%);
+    }
+
+    .split .right {
+      transform: translateX(100%);
+    }
+
+    .joined .left, .joined .right {
+      transform: translateX(0);
+    }
+
+    .quote-container {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ff6a6a, #ffcc70);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeInOut 6s infinite;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0; }
+      20%, 80% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="animationContainer">
+    <div class="half left"></div>
+    <div class="half right"></div>
+    <div class="quote-container" id="quoteContainer">
+      <p id="quoteText">"Every love story is beautiful, but ours is my favorite."</p>
+    </div>
+  </div>
+
+  <script>
+    const container = document.getElementById('animationContainer');
+    const quotes = [
+      "\"Every love story is beautiful, but ours is my favorite.\"",
+      "\"You are my today and all of my tomorrows.\"",
+      "\"In your arms is where I belong.\"",
+      "\"Love is not about how many days, months, or years we've been together. It's about how much we love each other every day.\""
+    ];
+    let quoteIndex = 0;
+
+    // Trigger the split and join animations
+    window.onload = () => {
+      container.classList.add('split'); // Split animation
+
+      // After 2 seconds (split duration), trigger join animation
+      setTimeout(() => {
+        container.classList.remove('split');
+        container.classList.add('joined');
+      }, 2000);
+
+      // Change quotes every 6 seconds
+      setInterval(() => {
+        quoteIndex = (quoteIndex + 1) % quotes.length;
+        document.getElementById('quoteText').textContent = quotes[quoteIndex];
+      }, 6000);
+    };
+  </script>
+</body>
+</html>
